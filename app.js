@@ -44,6 +44,6 @@ app.get('/findUser', function (req, res) {
 
   var id = req.query.user
 
-    req.sql("select * from Medication where pno = " + id +" for json path")
+    req.sql("select medName, dosage, quantity, specialInstructions from Medication where pno = " + id +" for json path")
     .into(res);
 });
