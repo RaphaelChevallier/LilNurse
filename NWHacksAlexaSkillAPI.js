@@ -6,6 +6,7 @@ app.listen(3000, () => {
 
 app.on('/', (req, res) => {
   console.log("req: ", req);
+  res.send("hello")
 })
 
 var Connection = require('tedious').Connection;
