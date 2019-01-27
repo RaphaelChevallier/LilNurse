@@ -39,3 +39,11 @@ app.get('/Medication', function (req, res) {
     req.sql("select * from Medication for json path")
     .into(res);
 });
+
+app.get('/findUser', function (req, res) {
+
+  var id = req.query.user
+
+    req.sql("select * from Medication where pno = 'user' for json path")
+    .into(res);
+});
