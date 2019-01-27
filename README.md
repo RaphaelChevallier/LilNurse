@@ -1,4 +1,4 @@
-# NWHacks2019Project
+# Lil' Nurse
 NWhacks 2019 project
 
 # Solving the problem of easier healthcare
