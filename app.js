@@ -54,29 +54,52 @@ app.get('/findUser', function (req, res) {
 });
 
 app.post('/register', function (req, res) {
-  console.log(req.body)
-    var patientName = req.body.patient_name;
-    var hospital = req.body.hospital_name;
-    var doctor = req.body.doc_name
-    var pno = req.body.pno;
-    var subscribed = req.body.patient_suscribing;
-    var med = req.body.medName;
-    var dosage = req.body.dose;
-    var quantity = req.body.quantity;
-    var date = req.body.date_issued;
-    var special = req.body.special_Ins;
+  console.log("hit the /register endpoing");
+  //console.log("req: ", req);
 
-    const Patient = {
-        pno, patientName, hospital, doctor
-    }
+    let { patient_name, hospital_name, doc_name, pno, patient_subscribing, medName, dose, quantity, date_issued, special_Ins } = req.body;
 
-    const Medication = {
-      med, dosage, pno, special, quantity, date
-    }
-    if(subscribed == 'website'){
-        req.sql("Insert into Medication (medName, dosage, pno, specialInstructions, quantity, dateIssued, typeOfMedicine) values(" + med + ", " + dosage + ", " + pno + ", " + special + ", " + quantity + ", " + date + ", bottle)")
-        req.sql("Insert into Patient (pno, pname, hospital, docName) values(" + pno + ", " + patientName + ", " + hospital + ", " + doctor + ")")
-        res.send(200)
-    }
+    console.log("patient_name: ", patient_name);
 
+    // var patientName = req.body.patient_name || "";
+    // var hospital = req.body.hospital_name || "";
+    // var doctor = req.body.doc_name || "";
+    // var pno = req.body.pno || "";
+    // var subscribed = req.body.patient_suscribing || "";
+    // var med = req.body.medName || "";
+    // var dosage = req.body.dose || "";
+    // var quantity = req.body.quantity || "";
+    // var date = req.body.date_issued || "";
+    // var special = req.body.special_Ins || "";
+
+    // const Patient = {
+    //     pno, patient_name, hospital, doctor
+    // }
+    //
+    // const Medication = {
+    //   med, dosage, pno, special, quantity, date
+    // }
+
+    console.log(medName);
+
+    if(patient_subscribing === 'website'){
+        console.log("yes, we're subscribed to website. Do the thing...");
+
+        var sqlstatement = "Insert into Patient (pno, pname, hospital, docName) values(" + pno + ", '" + patient_name + "', '" + hospital_name + "', '" + doc_name + "')";
+
+        console.log(sqlstatement);
+
+        req.sql("Insert into Patient (pno, pname, hospital, docName) values(" + pno + ", '" + patient_name + "', '" + hospital_name + "', '" + doc_name + "')");
+
+        req.sql("Insert into Medication (medName, dosage, Papno, specialInstructions, quantity, dateIssued, typeOfMedicine) values('" + medName + "', '" + dose + "', " + pno + ", '" + special_Ins + "', '" + quantity + "', '" + date_issued + "', 'bottle')").into(res)
+
+
+
+
+
+        //res.send(200);
+    }
+    else {
+      res.send(500);
+    }
   });
