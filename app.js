@@ -7,7 +7,6 @@ res.end('<h1>Hello World</h1>');
 });
 
 var app = http.createServer((req, res) =>{
-    res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({ 'msg': 'Hello Stefan' }));
 });
 
