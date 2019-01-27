@@ -18,6 +18,8 @@
   "homepage": "",
   "dependencies": {
     "express": "^4.16.4",
+    "express4-tedious": "^0.3.0",
+    "nodemon": "^1.18.9",
     "tedious": "^4.1.3"
   }
 }
