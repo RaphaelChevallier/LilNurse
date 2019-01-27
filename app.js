@@ -6,8 +6,13 @@ res.setHeader('Content-Type', 'text/html');
 res.end('<h1>Hello World</h1>');
 });
 
-var app = http.createServer((req, res) =>{
-    res.send(JSON.stringify({ 'msg': 'Hello Stefan' }));
+//var app = http.createServer((req, res) =>{
+//    res.send(JSON.stringify({ 'msg': 'Hello Stefan' }));
+//});
+var express = require('express');
+var app = express();
+app.get('/', (req, res) => {
+  res.send(JSON.stringify({ 'msg': 'Hello Stefan' }));
 });
 
 server.listen(port,() => {
