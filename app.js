@@ -48,7 +48,7 @@ function queryDatabase()
 
     // Read all rows from table
     var request = new Request(
-        "SELECT * FROM Medication;",
+        "SELECT pname, medName, dosage, specialInstructions from Medication.pno;",
         function(err, rowCount, rows)
         {
             console.log(rowCount + ' row(s) returned');
