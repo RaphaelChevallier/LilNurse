@@ -7,10 +7,15 @@ res.end('<h1>Hello World</h1>');
 });
 
 var express = require('express');
+const bodyParser = require("body-parser");
 var tediousExpress = require('express4-tedious')
+const logger = require('morgan');
 
 //connection
 var app = express();
+app.use(express.urlencoded());
+app.use(logger('dev'));
+
 var connectionObj = {
     "server"  : "marpole1.database.windows.net",
     "userName": "LilNurse",
@@ -47,3 +52,31 @@ app.get('/findUser', function (req, res) {
     req.sql("select medName, dosage, quantity, specialInstructions from Medication where pno = " + id +" for json path")
     .into(res);
 });
+
+app.post('/register', function (req, res) {
+  console.log(req.body)
+    var patientName = req.body.patient_name;
+    var hospital = req.body.hospital_name;
+    var doctor = req.body.doc_name
+    var pno = req.body.pno;
+    var subscribed = req.body.patient_suscribing;
+    var med = req.body.medName;
+    var dosage = req.body.dose;
+    var quantity = req.body.quantity;
+    var date = req.body.date_issued;
+    var special = req.body.special_Ins;
+
+    const Patient = {
+        pno, patientName, hospital, doctor
+    }
+
+    const Medication = {
+      med, dosage, pno, special, quantity, date
+    }
+    if(subscribed == 'website'){
+        req.sql("Insert into Medication (medName, dosage, pno, specialInstructions, quantity, dateIssued, typeOfMedicine) values(" + med + ", " + dosage + ", " + pno + ", " + special + ", " + quantity + ", " + date + ", bottle)")
+        req.sql("Insert into Patient (pno, pname, hospital, docName) values(" + pno + ", " + patientName + ", " + hospital + ", " + doctor + ")")
+        res.send(200)
+    }
+
+  });
