@@ -6,12 +6,10 @@ res.setHeader('Content-Type', 'text/html');
 res.end('<h1>Hello World</h1>');
 });
 
-//var app = http.createServer((req, res) =>{
-//    res.send(JSON.stringify({ 'msg': 'Hello Stefanw' }));
-//});
 var express = require('express');
 var tediousExpress = require('express4-tedious')
 
+//connection
 var app = express();
 var connectionObj = {
     "server"  : "marpole1.database.windows.net",
@@ -30,59 +28,14 @@ app.get('/', (req, res) => {
 });
 app.listen(port, () => console.log(`Listening on port: ${port}`))
 
-// server.listen(port,() => {
-// console.log(`Server running at port `+port);
-// });
+app.get('/patientList', function (req, res) {
 
-// var Connection = require('tedious').Connection;
-// var Request = require('tedious').Request;
-//
-// // Create connection to database
-// var config =
-// {
-//     userName: 'LilNurse', // update me
-//     password: 'Marpole1', // update me
-//     server: 'marpole1.database.windows.net', // update me
-//     options:
-//     {
-//         database: 'Patient-Doctor', //update me
-//         encrypt: true
-//     }
-// }
-// var connection = new Connection(config);
-//
-// // Attempt to connect and execute queries if connection goes through
-// connection.on('connect', function(err)
-//     {
-//         if (err)
-//         {
-//             console.log(err)
-//         }
-//         else
-//         {
-//             queryDatabase()
-//         }
-//     }
-// );
-//
-// function queryDatabase()
-// {
-//     console.log('Reading rows from the Table...');
-//
-//     // Read all rows from table
-//     var request = new Request(
-//         "SELECT pname, medName, dosage, specialInstructions from Medication.pno;",
-//         function(err, rowCount, rows)
-//         {
-//             console.log(rowCount + ' row(s) returned');
-//             process.exit();
-//         }
-//     );
-//
-//     request.on('row', function(columns) {
-//         columns.forEach(function(column) {
-//             console.log("%s\t%s", column.metadata.colName, column.value);
-//         });
-//     });
-//     connection.execSql(request);
-// }
+    req.sql("select * from Patient for json path")
+    .into(res);
+});
+
+app.get('/Medication', function (req, res) {
+
+    req.sql("select * from Medication for json path")
+    .into(res);
+});
